@@ -74,3 +74,7 @@ class Benz extends Car implements AirConditioner {
 }
 
          // let's try to create some objects and give them values
+public class Main {
+    public static void main(String[] args) {
+        // objects to use
+
