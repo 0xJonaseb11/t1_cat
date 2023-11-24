@@ -77,4 +77,37 @@ class Benz extends Car implements AirConditioner {
 public class Main {
     public static void main(String[] args) {
         // objects to use
+        Toyota toyota = new Toyota("Blue", 3, 190, 290);
+        Car car = new Car("Green", 7, 170, 350);
 
+        try {
+            Benz benz = new Benz("White", 120, 200, 500);
+
+            //Catch SeatNumberException
+        } catch (SeatNumberException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        // Serialization
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("car.ser"))) {
+            objectOutputStream.writeObject(car);
+            objectOutputStream.writeObject(toyota);
+        } catch (IOException e) {
+            e.getMessage();
+        }
+
+        // Read file and display content
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("car.ser"))) {
+            while (true) {
+                try {
+                    Car readCar = (Car) objectInputStream.readObject();
+                    System.out.println(readCar);
+                } catch (EndOfException e) {
+                    break; // End of file reached
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.toString();
+        }
+    }
+}
